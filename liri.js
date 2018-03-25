@@ -17,7 +17,7 @@ if(process.argv[2] === "movie-this" && !process.argv[3]){
             console.log("Title: " + body.Title);
             console.log("Year: " + body.Year);
             console.log("IMDB Rating: " + body.imdbRating);
-            //console.log("Rotten Tomatoes Score: " + body.Ratings[1].Value);
+            console.log("Rotten Tomatoes Score: " + body.Ratings[1].Value);
             console.log("Country produced in: " + body.Country);
             console.log("Language: " + body.Language);
             console.log("Plot: " + body.Plot);
