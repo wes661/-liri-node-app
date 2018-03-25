@@ -4,35 +4,40 @@ var keys = require(__dirname + "/keys.js");
 var spotify = (keys.spotify);
 var client = (keys.twitter);
 var omdbApi = (keys.omdb);
-var title = process.argv[3];
-var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=" + omdbApi.key;
+var command = process.argv[3];
+var queryUrl = "http://www.omdbapi.com/?t=" + command + "&y=&plot=short&apikey=" + omdbApi.key;
+var queryUrl2 = "http://www.omdbapi.com/?t=mr%20nobody&y=&plot=short&apikey=" + omdbApi.key;
 console.log(queryUrl);
+console.log(queryUrl2);
 
+if(process.argv[2] === "movie-this" && !process.argv[3]){
+    request(queryUrl2, function(error, response, body){
+        if (!error && response.statusCode === 200){
+            var body = JSON.parse(body);
+            console.log("Title: " + body.Title);
+            console.log("Year: " + body.Year);
+            console.log("IMDB Rating: " + body.imdbRating);
+            //console.log("Rotten Tomatoes Score: " + body.Ratings[1].Value);
+            console.log("Country produced in: " + body.Country);
+            console.log("Language: " + body.Language);
+            console.log("Plot: " + body.Plot);
+            console.log("Actors: " + body.Actors);
+        }
+    })
+}
+else if(process.argv[2] === "movie-this"){
+    request(queryUrl, function(error, response, body){
+        if (!error && response.statusCode === 200){
+            var body = JSON.parse(body);
+            console.log("Title: " + body.Title);
+            console.log("Year: " + body.Year);
+            console.log("IMDB Rating: " + body.imdbRating);
+            console.log("Rotten Tomatoes Score: " + body.Ratings[1].Value);
+            console.log("Country produced in: " + body.Country);
+            console.log("Language: " + body.Language);
+            console.log("Plot: " + body.Plot);
+            console.log("Actors: " + body.Actors);
+        }
+    })
+}
 
-request(queryUrl, function(error, response, body) {
-
-  if (!error && response.statusCode === 200) {
-    if(process.argv[2] === "movie-this"){
-        title = "Mr. Nobody";
-        console.log("Title: " + JSON.parse(body).Title);
-        console.log("Year: " + JSON.parse(body).Year);
-        console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
-        //console.log("Rotten Tomatoes Score: " + JSON.parse(body).Ratings[1].Value);
-        console.log("Country produced in: " + JSON.parse(body).Country);
-        console.log("Language: " + JSON.parse(body).Language);
-        console.log("Plot: " + JSON.parse(body).Plot);
-        console.log("Actors: " + JSON.parse(body).Actors);
-    }
-    else if(process.argv[2] === "movie-this"){
-        console.log("Title: " + JSON.parse(body).Title);
-        console.log("Year: " + JSON.parse(body).Year);
-        console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
-        console.log("Rotten Tomatoes Score: " + JSON.parse(body).Ratings[1].Value);
-        console.log("Country produced in: " + JSON.parse(body).Country);
-        console.log("Language: " + JSON.parse(body).Language);
-        console.log("Plot: " + JSON.parse(body).Plot);
-        console.log("Actors: " + JSON.parse(body).Actors);
-
-    }
-  }
-});
