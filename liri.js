@@ -1,17 +1,19 @@
 require("dotenv").config();
 var request = require("request");
 var Twitter = require('twitter');
-var keys = require(__dirname + "/keys.js");
-// var spotify = (keys.spotify);
+var Spotify = require('node-spotify-api');
+var keys = require(__dirname + "/keys.js"); 
+var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 var omdbApi = (keys.omdb);
-var command = process.argv[3];
-var queryUrl = "http://www.omdbapi.com/?t=" + command + "&y=&plot=short&apikey=" + omdbApi.key;
+var command = process.argv[2];
+var title = process.argv[3];
+var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=" + omdbApi.key;
 var queryUrl2 = "http://www.omdbapi.com/?t=mr%20nobody&y=&plot=short&apikey=" + omdbApi.key;
-console.log(client);
 
 
-if(process.argv[2] === "movie-this" && !process.argv[3]){
+
+if(command === "movie-this" && !title){
     request(queryUrl2, function(error, response, body){
         if (!error && response.statusCode === 200){
             var body = JSON.parse(body);
@@ -26,7 +28,7 @@ if(process.argv[2] === "movie-this" && !process.argv[3]){
         }
     })
 }
-else if(process.argv[2] === "movie-this"){
+else if(command === "movie-this"){
     request(queryUrl, function(error, response, body){
         if (!error && response.statusCode === 200){
             var body = JSON.parse(body);
@@ -42,9 +44,40 @@ else if(process.argv[2] === "movie-this"){
     })
 }
 
-var params = {screen_name: 'WesHanson16'};
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
-  if (!error) {
-    console.log(tweets);
-  }
-});
+if(command === "my-tweets"){
+    var params = {screen_name: 'WesHanson16'};
+    client.get('statuses/user_timeline', params, function(error, tweets, body, response) {
+        if (!error) {
+            for (i = 0; i < tweets.length; i++){
+                console.log(tweets[i].text);
+                console.log(tweets[i].created_at);
+            }    
+        }
+    });
+}
+if(command === "spotify-this-song" && !title){
+    spotify.search({ type: 'track', query: 'The Sign' }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+        else{ var songInfo = data.tracks.items[0];
+            console.log(songInfo.artists[0].name)
+            console.log(songInfo.name)
+            console.log(songInfo.album.name)
+            console.log(songInfo.preview_url)
+        }    
+    });
+}
+else if(command === "spotify-this-song"){
+    spotify.search({ type: 'track', query: title }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+        else{ var songInfo = data.tracks.items[0];
+            console.log(songInfo.artists[0].name)
+            console.log(songInfo.name)
+            console.log(songInfo.album.name)
+            console.log(songInfo.preview_url)
+        }    
+    });
+}
