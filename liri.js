@@ -12,7 +12,7 @@ var command = process.argv[2];
 var title = process.argv[3];
 
 
-//Switch command to call different functions for LIRI Bot
+//Switch function to call different functions based on user input
 switch(command){
     case "my-tweets":
       myTweets();
@@ -39,6 +39,8 @@ switch(command){
     break;
 
     default:
+    //Default log if none of the switch commands were entered
+    //Log explains how to use LIRI Bot
     console.log("LIRI Bot at your service.");
     console.log("Enter Command: my-tweets (will return recent tweets)");
     console.log("Enter Command: movie-this and title of movie in quotes (returns various info about movie)");
@@ -122,8 +124,9 @@ function spotifySong(song){
 //Function for reading random.txt file then running the spotifySong function to console log song info and append song info to log.txt file
 function doThing(){
     fs.readFile('random.txt', "utf8", function(error, data){
+      //Split the data that is read in random.txt file with commas  
       var txt = data.split(',');
-  
+     //Run function with the parameters of (txt) as the command and [1] as the value from random.txt
       spotifySong(txt[1]);
     });
 }
