@@ -1,3 +1,4 @@
+//Variables and requirements for LIRI Bot
 require("dotenv").config();
 var fs = require("fs");
 var request = require("request");
@@ -11,7 +12,7 @@ var command = process.argv[2];
 var title = process.argv[3];
 
 
-
+//Switch command to call different functions for LIRI Bot
 switch(command){
     case "my-tweets":
       myTweets();
@@ -38,11 +39,16 @@ switch(command){
     break;
 
     default:
-    console.log("{Please enter a command: my-tweets, spotify-this-song, movie-this, do-what-it-says}");
+    console.log("LIRI Bot at your service.");
+    console.log("Enter Command: my-tweets (will return recent tweets)");
+    console.log("Enter Command: movie-this and title of movie in quotes (returns various info about movie)");
+    console.log("Enter Command: spotify-this-song and title of song in quotes (returns various info about song)");
+    console.log("Enter Command: do-what-it-says (will return song info from the file where it was read)");
     break;
   
   }
 
+//Function for console logging movie info and appending movie info to log.txt file
 function movieThis(movie){
     var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=" + omdbApi.key;
     request(queryUrl, function(error, response, body){
@@ -76,6 +82,7 @@ function movieThis(movie){
     });
 }
 
+//Function for console logging tweets and appending tweets to log.txt file
 function myTweets(){
     var params = {screen_name: 'WesHanson16',
                   count: 20};
@@ -83,17 +90,15 @@ function myTweets(){
         if (!error) {
             for (i = 0; i < tweets.length; i++){
                 console.log("Tweet: " + tweets[i].text);
-                console.log("Date " + tweets[i].created_at);
+                console.log("Date: " + tweets[i].created_at);
                 console.log("----------------------------------------------------------------");
-                fs.appendFile("log.txt", "Tweet: " + tweets[i].text + "\r\n", (error) => { /* handle error */ });
-                fs.appendFile("log.txt", "Date " + tweets[i].created_at + "\r\n", (error) => { /* handle error */ });
-                fs.appendFile("log.txt", "----------------------------------------------------------------" + "\r\n", (error) => { /* handle error */ });
+                fs.appendFile("log.txt", "Tweet: " + tweets[i].text + "\r\n" + tweets[i].created_at +  "\r\n" +  "\r\n", (error) => { /* handle error */ });
             } 
-              
         }
     });
 }
 
+//Function for console logging song info and appending song info to log.txt file
 function spotifySong(song){
     spotify.search({ type: 'track', query: song }, function(err, data) {
         if (err) {
@@ -103,17 +108,18 @@ function spotifySong(song){
             console.log("Artist: " + songInfo.artists[0].name)
             console.log("Track: " + songInfo.name)
             console.log("Album: " + songInfo.album.name)
-            console.log("Preview " + songInfo.preview_url)
+            console.log("Preview: " + songInfo.preview_url)
             console.log("----------------------------------------------------------------");
-            fs.appendFile("log.txt", songInfo.artists[0].name + "\r\n", (error) => { /* handle error */ })
-            fs.appendFile("log.txt", songInfo.name + "\r\n", (error) => { /* handle error */ })
-            fs.appendFile("log.txt", songInfo.album.name + "\r\n", (error) => { /* handle error */ })
-            fs.appendFile("log.txt", songInfo.preview_url + "\r\n", (error) => { /* handle error */ })
+            fs.appendFile("log.txt", "Artist: " + songInfo.artists[0].name + "\r\n", (error) => { /* handle error */ })
+            fs.appendFile("log.txt", "Track: " + songInfo.name + "\r\n", (error) => { /* handle error */ })
+            fs.appendFile("log.txt", "Album: " + songInfo.album.name + "\r\n", (error) => { /* handle error */ })
+            fs.appendFile("log.txt", "Preview: " + songInfo.preview_url + "\r\n", (error) => { /* handle error */ })
             fs.appendFile("log.txt", "----------------------------------------------------------------" + "\r\n", (error) => { /* handle error */ });
         }    
     });
 }
 
+//Function for reading random.txt file then running the spotifySong function to console log song info and append song info to log.txt file
 function doThing(){
     fs.readFile('random.txt', "utf8", function(error, data){
       var txt = data.split(',');
