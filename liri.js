@@ -22,7 +22,7 @@ switch(command){
       if(title){
         spotifySong(title);
       } else{
-        spotifySong('The Sign');
+        spotifySong('The Sign Ace Base');
       }
     break;
   
