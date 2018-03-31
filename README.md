@@ -1,7 +1,7 @@
 # LIRI Bot
 -You must download and install Nodejs @ https://nodejs.org/en/
 -Run "npm install" in the terminal to aquire proper packages to use this app
--It's dependencies include:
+-It's dependencies include the following packages:
     "dotenv": "^5.0.1",
     "node-spotify-api": "^1.0.7",
     "twitter": "^1.7.1"
