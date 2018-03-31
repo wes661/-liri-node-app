@@ -5,6 +5,9 @@
     "dotenv": "^5.0.1",
     "node-spotify-api": "^1.0.7",
     "twitter": "^1.7.1"
+-Make sure you're in the liri-node-app directory and open liri.js
+-Type in the terminal "node liri.js" to run the app
+-Follow the directions that are returned to utilize the app
 
 ### Overview
 
