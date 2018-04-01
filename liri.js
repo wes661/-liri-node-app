@@ -107,12 +107,6 @@ function movieThis(movie){
             fs.appendFile("log.txt", "Language: " + body.Language + "\r\n", (error) => { /* handle error */ });
             fs.appendFile("log.txt", "Plot: " + body.Plot + "\r\n", (error) => { /* handle error */ });
             fs.appendFile("log.txt", "Actors: " + body.Actors + "\r\n", (error) => { /* handle error */ });
-            if(movie === "Mr. Nobody"){
-                console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/");
-                console.log("It's on Netflix!");
-                fs.appendFile('log.txt', "If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/" + "\r\n", (error) => { /* handle error */ });
-                fs.appendFile('log.txt', "It's on Netflix!" + "\r\n", (error) => { /* handle error */ });
-            }
             console.log("----------------------------------------------------------------");
             fs.appendFile("log.txt", "----------------------------------------------------------------" + "\r\n", (error) => { /* handle error */ });
         }
@@ -129,7 +123,7 @@ function myTweets(){
                 console.log("Tweet: " + tweets[i].text);
                 console.log("Date: " + tweets[i].created_at);
                 console.log("----------------------------------------------------------------");
-                fs.appendFile("log.txt", "Tweet: " + tweets[i].text + "\r\n" + tweets[i].created_at +  "\r\n" +  "\r\n", (error) => { /* handle error */ });
+                fs.appendFile("log.txt", "Tweet: " + tweets[i].text + "\r\n" + tweets[i].created_at +  "\r\n" + "----------------------------------------------------------------" + "\r\n", (error) => { /* handle error */ });
             } 
         }
     });
