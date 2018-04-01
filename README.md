@@ -9,13 +9,24 @@
 
     "node-spotify-api": "^1.0.7",
 
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+
+    "inquirer": "^5.2.0"
 
 -Make sure you're in the liri-node-app directory and open liri.js
 
 -Type in the terminal "node liri.js" to run the app
 
--Follow the directions that are returned to utilize the app
+-Select one of the options that are returned
+
+    -My Tweets
+
+    -Movie This (then search movie)
+
+    -Spotify This (then search song)
+
+    -Do what it says (returns song it reads from random.txt file)
+
 
 ### Overview
 

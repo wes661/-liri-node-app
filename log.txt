@@ -1,0 +1,24 @@
+Tweet: LIRI Bot FTW #Nodejs
+Thu Mar 29 04:50:45 +0000 2018
+
+Tweet: I think an A+ is in order! #Nodejs
+Thu Mar 29 04:49:14 +0000 2018
+
+Tweet: Digging this coding bootcamp! #Coding
+Thu Mar 29 04:47:58 +0000 2018
+
+Tweet: Hello World!
+Tue Mar 27 04:17:42 +0000 2018
+
+Tweet: Just setting up my Twitter. #myfirstTweet
+Sun Mar 25 05:30:46 +0000 2018
+
+Title: The Green Mile
+Year: 1999
+IMDB Rating: 8.5
+Rotten Tomatoes Score: 80%
+Country produced in: USA
+Language: English, French
+Plot: The lives of guards on Death Row are affected by one of their charges: a black man accused of child murder and rape, yet who has a mysterious gift.
+Actors: Tom Hanks, David Morse, Michael Clarke Duncan, Bonnie Hunt
+----------------------------------------------------------------

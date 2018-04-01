@@ -1,4 +1,5 @@
 //Variables and requirements for LIRI Bot
+var inquirer = require("inquirer");
 require("dotenv").config();
 var fs = require("fs");
 var request = require("request");
@@ -11,48 +12,82 @@ var omdbApi = (keys.omdb);
 var command = process.argv[2];
 var title = process.argv[3];
 
+//Calling lirirBot function to initialize app
+liriBot();
 
-//Switch function to call different functions based on user input
-switch(command){
-    case "my-tweets":
-      myTweets();
-    break;
-  
-    case "spotify-this-song":
-      if(title){
-        spotifySong(title);
-      } else{
-        spotifySong('The Sign Ace Base');
-      }
-    break;
-  
-    case "movie-this":
-      if(title){
-        movieThis(title)
-      } else{
-        movieThis("Mr. Nobody")
-      }
-    break;
-  
-    case "do-what-it-says":
-      doThing();
-    break;
+//liriBot function holds switch statement that allows user to pick what they want to do (Tweets, Movie Search, Song Search)
+function liriBot(){
+    inquirer.prompt({
+        type: "list",
+        message: "Welcome, I'm LIRI Bot. What would you like to do?",
+        choices: ["My Tweets", "Movie This", "Spotify This", "Do what it says", "Exit"],
+        name: "command"
+    }).then(function(data){
+        switch(data.command) {
+            case "My Tweets":
+                myTweets();
+                setTimeout(function(){
+                    liriBot();
+                }, 3000);
+            break;
 
-    default:
-    //Default log if none of the switch commands were entered
-    //Log explains how to use LIRI Bot
-    console.log("LIRI Bot at your service.");
-    console.log("Enter Command: my-tweets (will return recent tweets)");
-    console.log("Enter Command: movie-this and title of movie in quotes (returns various info about movie)");
-    console.log("Enter Command: spotify-this-song and title of song in quotes (returns various info about song)");
-    console.log("Enter Command: do-what-it-says (will return song info from the file where it was read)");
-    break;
-  
-  }
+            case "Movie This":
+                inquirer.prompt({
+                    type: "input",
+                    message: "Search a movie",
+                    name: "title"
+                }).then(function(data){
+                    movieThis(data.title);
+                    setTimeout(function(){
+                        liriBot();
+                    }, 3000);
+                })
+            break;
+            
+            case "Spotify This":
+                inquirer.prompt({
+                    type: "input",
+                    message: "Search a song",
+                    name: "title"
+                }).then(function(data){
+                    spotifySong(data.title);
+                    setTimeout(function(){
+                        liriBot();
+                    }, 3000);
+                })
+            break; 
+            
+            case "Do what it says":
+                doThing();
+                setTimeout(function(){
+                    liriBot();
+                }, 3000);
+            break;
+
+            case "Exit":
+            console.log("Thanks for using LIRI Bot!");
+            setTimeout(function(){
+                console.log("Goodbye");
+            }, 1500)
+            setTimeout(function(){
+                console.log("LIRI Bot shutting down...");
+            }, 2500)
+            setTimeout(function(){
+                console.log(".........................");
+            }, 3000)
+            break;
+        }
+    })
+}
+
 
 //Function for console logging movie info and appending movie info to log.txt file
 function movieThis(movie){
-    var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=" + omdbApi.key;
+    var title = movie;
+    if(title === ''){
+        title = "Mr. Nobody"
+    }
+    var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=" + omdbApi.key;
     request(queryUrl, function(error, response, body){
         if (!error && response.statusCode === 200){
             var body = JSON.parse(body);
@@ -102,6 +137,9 @@ function myTweets(){
 
 //Function for console logging song info and appending song info to log.txt file
 function spotifySong(song){
+    if(song === ''){
+        song = 'The Sign Ace Base';
+    }
     spotify.search({ type: 'track', query: song }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
@@ -130,3 +168,5 @@ function doThing(){
       spotifySong(txt[1]);
     });
 }
+
+
