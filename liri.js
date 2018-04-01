@@ -12,7 +12,7 @@ var omdbApi = (keys.omdb);
 var command = process.argv[2];
 var title = process.argv[3];
 
-//Calling lirirBot function to initialize app
+//Calling liriBot function to initialize app
 liriBot();
 
 //liriBot function holds switch statement that allows user to pick what they want to do (Tweets, Movie Search, Song Search)
