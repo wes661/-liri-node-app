@@ -148,7 +148,9 @@ function spotifySong(song){
             fs.appendFile("log.txt", "Track: " + songInfo.name + "\r\n", (error) => { /* handle error */ })
             fs.appendFile("log.txt", "Album: " + songInfo.album.name + "\r\n", (error) => { /* handle error */ })
             fs.appendFile("log.txt", "Preview: " + songInfo.preview_url + "\r\n", (error) => { /* handle error */ })
+        setTimeout(function(){
             fs.appendFile("log.txt", "----------------------------------------------------------------" + "\r\n", (error) => { /* handle error */ });
+        }, 500)
         }    
     });
 }
